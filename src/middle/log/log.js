@@ -1,10 +1,9 @@
 var winston = require('winston');
-var morgan = require('morgan');
 
 //http://stackoverflow.com/questions/27906551/node-js-logging-use-morgan-and-winston
 
-//Configure winston to log to OS with journald
-var logger = new winston.Logger({
+//Configure and export winston to log to my local log file and optionally to console
+module.exports = new winston.Logger({
   transports: [
     new winston.transports.File({
       level: 'info',
@@ -23,15 +22,4 @@ var logger = new winston.Logger({
     })*/
   ],
   exitOnError: false
-});
-
-logger.stream = {
-  write: function(message, encoding) {
-    logger.info(message);
-  }
-};
-
-//Export, for consumption such as express().use()
-module.exports = morgan('combined', {
-  stream: logger.stream
 });

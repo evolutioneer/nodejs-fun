@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var winston = require('winston');
+var logger = require('../middle/log/log.js');
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-  winston.log('Time: ', Date.now());
+  logger.info('===================== Time: ' + Date.now());
   next();
 });
 

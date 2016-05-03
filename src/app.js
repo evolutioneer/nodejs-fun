@@ -6,7 +6,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //--- Configure middleware
-app.use(require('./middle/log/log.js'));
+app.use(require('./middle/log/log-express-requests.js'));
 
 //--- Build application
 app.get('/', function(req, res) {
