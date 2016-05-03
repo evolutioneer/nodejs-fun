@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# STOP
+# $ sudo bin/stop
+#
+# A script to:
+#   1) Flush the project's iptables filter chain
+#   2) Kill the running node instance
+
+
+#=== Check that we are running as root
+if [ "$EUID" -ne 0 ]; then
+  echo "!!! Must run as root"
+  exit 1
+fi
+
+
+#=== Configure our iptables
+sudo iptables -D INPUT -i enp0s25 -j NODEJS-FUN
+sudo iptables -F NODEJS-FUN
+sudo iptables -X NODEJS-FUN
+
+
+#=== Kill the running node instance, if there is one
+pkill node
+echo "... Stopped"

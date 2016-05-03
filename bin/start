@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# START
+# $ sudo bin/start
+#
+# A script to:
+#   1) Configure the project's iptables filter chain
+#   2) Start the nodejs application at src/app.js
+#
+
+
+#=== Check that we are running as root
+if [ "$EUID" -ne 0 ]; then
+  echo "!!! Must run as root"
+  exit 1
+fi
+
+
+#=== Stop the process if necessary
+bin/stop
+
+#=== Configure our iptables
+sudo iptables -N NODEJS-FUN
+sudo iptables -A NODEJS-FUN -i enp0s25 -p tcp -m tcp --dport 3000 -j ACCEPT
+sudo iptables -I INPUT -i enp0s25 -j NODEJS-FUN
+
+
+#=== Start our application in the background
+node src/app.js &
+echo "... Started"
