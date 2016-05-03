@@ -1,0 +1,6 @@
+LOGGING
+
+Log Nodejs to system logs with Winston; log expressjs HTTP events to Winston with Morgan:
+http://stackoverflow.com/questions/27906551/node-js-logging-use-morgan-and-winston
+
+
